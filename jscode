@@ -1,0 +1,239 @@
+jscode
+const quizData = {
+    cricket: [
+      {
+        question: "Who won the 2019 Cricket World Cup?",
+        a: "India",
+        b: "Australia",
+        c: "England",
+        d: "New Zealand",
+        correct: "c"
+      },
+      {
+        question: "Who is the highest run scorer in cricket?",
+        a: "Virat Kohli",
+        b: "Sachin Tendulkar",
+        c: "Ricky Ponting",
+        d: "Brian Lara",
+        correct: "b"
+      },
+
+      {
+        question: "How many players are there in each cricket team on the field during a match?",
+        a: "9",
+        b: "12",
+        c: "15",
+        d: "11",
+        correct: "d"
+      },
+      {
+        question: "What is the name of the three wooden stumps topped by two bails on which the ball is aimed?",
+        a: "Wicket",
+        b: "Pitch",
+        c: "Crease",
+        d: "Boundary",
+        correct: "a"
+      },
+      {
+        question: "Which format of cricket involves two teams playing a single match over a maximum of 50 overs per side?",
+
+        a: "Test Match",        
+        b: "One Day International (ODI)",
+        c: "Twenty20 (T20)",
+        d: "The Ashes",
+        correct: "b"
+      },
+      {
+        question:"Which country is considered the birthplace of cricket?",
+        a: "India",        
+        b: "Australia",
+        c: "England",
+        d: "South Africa",
+        correct: "c"
+      }
+    ],
+    programming: {
+      c: [
+        {
+          question: "Who invented the C language?",
+          a: "Bjarne Stroustrup",
+          b: "James Gosling",
+          c: "Dennis Ritchie",
+          d: "Guido van Rossum",
+          correct: "c"
+        }
+      ],
+      java: [
+        {
+          question: "Which company developed Java?",
+          a: "Microsoft",
+          b: "Apple",
+          c: "Oracle",
+          d: "Sun Microsystems",
+          correct: "d"
+        }
+      ],
+      python: [
+        {
+          question: "Who created Python?",
+          a: "James Gosling",
+          b: "Guido van Rossum",
+          c: "Dennis Ritchie",
+          d: "Ken Thompson",
+          correct: "b"
+        }
+      ],
+      html: [
+        {
+          question: "What does HTML stand for?",
+          a: "Hyper Text Markup Language",
+          b: "Home Tool Markup Language",
+          c: "Hyperlinks and Text Markup Language",
+          d: "None of the above",
+          correct: "a"
+        }
+      ]
+    },
+    movies: [
+      {
+        question: "Who directed 'Inception'?",
+        a: "Steven Spielberg",
+        b: "Quentin Tarantino",
+        c: "Christopher Nolan",
+        d: "James Cameron",
+        correct: "c"
+      }
+    ]
+  };
+  
+  let selectedCategory = null;
+  let selectedSubCategory = null;
+  let currentQuiz = 0;
+  let score = 0;
+  
+  // Function to handle category selection
+  function selectCategory(category) {
+    selectedCategory = category;
+    if (category === 'programming') {
+      loadSubCategories();
+    } else {
+      currentQuiz = 0; // Reset to the first question
+      score = 0; // Reset the score
+      loadQuiz();
+    }
+  }
+  
+  // Load subcategories for Programming
+  function loadSubCategories() {
+    const container = document.getElementById('quiz-container');
+    container.innerHTML = `
+      <h1>Select Programming Language</h1>
+      <button class="category-btn" onclick="selectSubCategory('c')">C</button>
+      <button class="category-btn" onclick="selectSubCategory('java')">Java</button>
+      <button class="category-btn" onclick="selectSubCategory('python')">Python</button>
+      <button class="category-btn" onclick="selectSubCategory('html')">HTML</button>
+    `;
+    // Add fade-in class for animation
+    container.classList.add('fade-in');
+  }
+  
+  // Function to handle subcategory selection
+  function selectSubCategory(subCategory) {
+    selectedSubCategory = subCategory;
+    currentQuiz = 0; // Reset to the first question
+    score = 0; // Reset the score
+    loadQuiz();
+  }
+  
+  // Load the quiz based on selected category or subcategory
+  function loadQuiz() {
+    const container = document.getElementById('quiz-container');
+    let quiz;
+  
+    if (selectedCategory === 'programming') {
+      quiz = quizData[selectedCategory][selectedSubCategory];
+    } else {
+      quiz = quizData[selectedCategory];
+    }
+  
+    if (currentQuiz < quiz.length) {
+      const questionData = quiz[currentQuiz];
+  
+      container.innerHTML = `
+        <div class="quiz-header">
+          <h2>${questionData.question}</h2>
+        </div>
+        <ul>
+          <li>
+            <input type="radio" name="answer" id="a" value="a">
+            <label for="a">${questionData.a}</label>
+          </li>
+          <li>
+            <input type="radio" name="answer" id="b" value="b">
+            <label for="b">${questionData.b}</label>
+          </li>
+          <li>
+            <input type="radio" name="answer" id="c" value="c">
+            <label for="c">${questionData.c}</label>
+          </li>
+          <li>
+            <input type="radio" name="answer" id="d" value="d">
+            <label for="d">${questionData.d}</label>
+          </li>
+        </ul>
+        <button id="submit">Submit</button>
+      `;
+  
+      // Add fade-in animation to list items
+      setTimeout(() => {
+        document.querySelectorAll('li').forEach(li => {
+          li.classList.add('visible');
+        });
+      }, 100);
+  
+      document.getElementById('submit').addEventListener('click', submitAnswer);
+    } else {
+      // Display the score once all questions are answered
+      container.innerHTML = `
+        <h2>You answered ${score}/${quiz.length} questions correctly!</h2>
+        <button onclick="location.reload()">Reload Quiz</button>
+      `;
+    }
+  }
+  
+  // Handle answer submission
+  function submitAnswer() {
+    const answerEls = document.querySelectorAll('input[name="answer"]');
+    let selectedAnswer;
+  
+    answerEls.forEach(answerEl => {
+      if (answerEl.checked) {
+        selectedAnswer = answerEl.value;
+      }
+    });
+  
+    if (selectedAnswer) {
+      let quiz;
+      if (selectedCategory === 'programming') {
+        quiz = quizData[selectedCategory][selectedSubCategory];
+      } else {
+        quiz = quizData[selectedCategory];
+      }
+  
+      if (selectedAnswer === quiz[currentQuiz].correct) {
+        score++;
+      }
+  
+      currentQuiz++;
+      loadQuiz();
+    } else {
+      alert("Please select an answer before submitting!");
+    }
+  }
+  
+  // Initial load animation
+  window.onload = () => {
+    const container = document.getElementById('quiz-container');
+    container.classList.add('fade-in');
+  }
+  
