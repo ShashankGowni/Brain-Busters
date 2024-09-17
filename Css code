@@ -1,0 +1,149 @@
+Css Code
+
+/* General styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* Hide scrollbars */
+  }
+  
+  /* Container styles */
+  .quiz-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    transform: translateY(-20px); /* Initial position for animation */
+    opacity: 0; /* Initial opacity for animation */
+    transition: all 0.5s ease-in-out; /* Smooth transition */
+  }
+  
+  /* Fade in animation */
+  .fade-in {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  /* Button styles */
+  .category-btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative; /* For button hover effect */
+    overflow: hidden; /* Ensure effect stays within button */
+    transition: background-color 0.3s ease;
+  }
+  
+  .category-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Button hover effect */
+  .category-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease;
+  }
+  
+  .category-btn:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  /* Styling for question text */
+  h1, h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Removing bullets from the list */
+  ul {
+    list-style-type: none; /* Removes bullets */
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Aligning options */
+  li {
+    margin: 10px 0;
+    text-align: left; /* Aligning text to the left */
+    display: flex;
+    align-items: center; /* Vertically align radio buttons and labels */
+    opacity: 0; /* Initial opacity for animation */
+    transform: translateY(20px); /* Initial position for animation */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth transition */
+  }
+  
+  li.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Submit button styling */
+  button#submit {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button#submit:hover {
+    background-color: #218838;
+  }
+  
+  /* Animation container */
+  .animation-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 20px;
+  }
+  
+  /* Tortoise and Rabbit animations */
+  #tortoise, #rabbit {
+    width: 50px;
+    height: 50px;
+    display: none; /* Hidden by default */
+  }
+  
+  @keyframes move {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100px); }
+  }
+  
+  #tortoise.show, #rabbit.show {
+    display: block;
+    animation: move 1s ease-in-out forwards;
+  }
+  
