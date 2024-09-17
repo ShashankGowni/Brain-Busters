@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Category Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="quiz-container" id="quiz-container">
+        <h1>Select Quiz Type</h1>
+        <button class="category-btn" onclick="selectCategory('cricket')">Cricket Quiz</button>
+        <button class="category-btn" onclick="selectCategory('programming')">Programming Quiz</button>
+        <button class="category-btn" onclick="selectCategory('movies')">Movie Quiz</button>
+    </div>
+    <div class="timer-container">
+        <p id="timer">Time left: 00:00</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
